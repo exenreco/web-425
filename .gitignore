@@ -16,10 +16,3 @@ node_modules/
 .DS_Store
 
 # not required Directories
-basic-routing/
-error-handling-demo/
-portfolio/
-unit-testing-demo/
-assets/
-character-factions.js
-daily-specials.js
