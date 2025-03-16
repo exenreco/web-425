@@ -17,3 +17,8 @@ node_modules/
 
 # not required Directories
 temp/
+basic-routing/
+error-handling-demo/
+portfolio/
+unit-testing-demo/
+assets/
