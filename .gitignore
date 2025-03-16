@@ -16,9 +16,8 @@ node_modules/
 .DS_Store
 
 # not required Directories
-temp/
-basic-routing/
-error-handling-demo/
-portfolio/
-unit-testing-demo/
-assets/
+/basic-routing
+/error-handling-demo
+/portfolio/
+/unit-testing-demo
+/assets/
