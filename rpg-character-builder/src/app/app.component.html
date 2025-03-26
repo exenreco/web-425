@@ -73,16 +73,25 @@
     justify-content: center;
     position: relative;
   }
+  .site-header .navigation {
+    flex: auto;
+    align-items: center;
+    justify-items: right;
+    justify-content: right;
+    width: calc(100% - 20em);
+    max-width: calc(100% - 20em);
+    min-width: calc(100% - 20em);
+  }
   .site-footer .navigation {
     width: 25%;
     max-width: 25%;
     min-width: 25%;
   }
-  .site-header .navigation .list,
-  .site-footer .navigation .list {
+  .site-footer .navigation .list,
+  .site-header .navigation .list {
     color: #fff;
     display: flex;
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     padding: .2em;
     align-items: center;
     justify-items: left;
@@ -93,7 +102,7 @@
   .site-footer .navigation .list .item {
     width: auto;
     height: auto;
-    margin: .2em;
+    margin: 0;
     padding: .2em;
     display: flex;
     flex: 1 1 auto;
@@ -107,6 +116,11 @@
     font-weight: normal;
     text-transform: none;
   }
+  .site-header .navigation .list .item {
+    margin: 0;
+    flex: 0 0 auto;
+    font-size: 1rem;
+  }
   .site-header .navigation .list .item span {
     font-size: 2rem;
   }
@@ -114,6 +128,7 @@
   .site-header .navigation .list .item .link:link,
   .site-header .navigation .list .item .link:active,
   .site-header .navigation .list .item .link:visited {
+    margin: auto;
     width: auto;
     height: auto;
     color: #fff;
@@ -124,7 +139,7 @@
     align-items: center;
     text-decoration: none;
     justify-items: center;
-    padding: .4em 0 .4em 0;
+    padding: .4em;
     justify-content: center;
     border: 2px solid red;
     box-shadow: 2px 2px 2px 1px rgba(255, 255, 255, 0.85);
@@ -161,6 +176,9 @@
 
   /* header logo style rules */
   .site-header .site-info {
+    width: 20em;
+    max-width: 20em;
+    min-width: 20em;
     margin: .2em;
     padding: .2em;
     display: flex;
@@ -214,8 +232,24 @@
 
   /* tablet view */
   @media only screen and (max-width: 1024px) {
-    .site-header{
+    .site-header {
       flex-direction: column;
+    }
+    .site-header .navigation {
+      flex-wrap: wrap;
+      align-items: center;
+      justify-items: center;
+      justify-content: center;
+    }
+    .site-header .site-info {
+      margin: auto;
+      width: 100%;
+      flex: 0 0 auto;
+      max-width: none;
+      min-width: none;
+      align-items: center;
+      justify-items: center;
+      justify-content: center;
     }
     .site-footer {
       flex-direction: column-reverse;
@@ -259,18 +293,18 @@
 
 <header class="site-header">
   <section class="site-info">
-    <h1 class="title" hidden>RPG Character Builder</h1>
+    <h1 class="title" hidden>{{ title }}</h1>
     <img class="logo" src="images/rpg-logo.png" alt="RPG Character Builder logo">
     <span class="tagline">Home to over 3.5M characters!</span>
   </section>
   <nav class="navigation">
     <ul class="list">
-      <li class="item"><a class="link" href="#">Home</a></li>
-      <li class="item"><a class="link" href="#">About</a></li>
-      <li class="item"><a class="link" href="#">Characters</a></li>
-      <li class="item"><a class="link" href="#">Contact</a></li>
-      <!--<li class="item"><span>|</span></li>-->
-      <li class="item"><a class="link" href="#">Login</a></li>
+      <li class="item"><a class="link" routerLink="/home">Home</a></li>
+      <li class="item"><a class="link" routerLink="/players">Players</a></li>
+      <li class="item"><a class="link" routerLink="/create-guild">Create Guild</a></li>
+      <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      <li class="item"><a class="link" routerLink="/character-faction">Character Faction</a></li>
+      <li class="item"><a class="link" routerLink="/signin">Sign In</a></li>
     </ul>
   </nav>
 </header>
@@ -298,11 +332,12 @@
   </div>
   <nav class="navigation">
     <ul class="list">
-      <li class="item"><a class="link" href="#">Home</a></li>
-      <li class="item"><a class="link" href="#">About</a></li>
-      <li class="item"><a class="link" href="#">Characters</a></li>
-      <li class="item"><a class="link" href="#">Contact</a></li>
-      <li class="item"><a class="link" href="#">Login</a></li>
+      <li class="item"><a class="link" routerLink="/home">Home</a></li>
+      <li class="item"><a class="link" routerLink="/players">Players</a></li>
+      <li class="item"><a class="link" routerLink="/create-guild">Create Guild</a></li>
+      <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      <li class="item"><a class="link" routerLink="/character-faction">Character Faction</a></li>
+      <li class="item"><a class="link" routerLink="/signin">Sign In</a></li>
     </ul>
   </nav>
 </footer>
