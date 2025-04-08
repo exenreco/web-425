@@ -78,56 +78,58 @@ styles: `
     text-align: left;
     border-bottom: .15em solid #fff;
   }
-    table {
-      margin: auto;
-      width: 100%;
-      background: red;
-      border-collapse: collapse;
-    }
-    table th {
-      font-size: 2rem;
-      text-align: left;
-      border-bottom: .15em solid #fff;
-    }
-    table tr:nth-child(2) {
-      font-size: 1rem;
-      font-weight: bold;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 4px;
-      text-align: left;
-    }
-    th {
-      background-color: #333;
-      color: white;
-    }
+  table {
+    margin: auto;
+    width: 100%;
+    background: red;
+    border-collapse: collapse;
+  }
+  table th {
+    font-size: 2rem;
+    text-align: left;
+    border-bottom: .15em solid #fff;
+  }
+  table tr:nth-child(2) {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 4px;
+    text-align: left;
+  }
+  th {
+    background-color: #333;
+    color: white;
+  }
 
-    tr:nth-child(odd) {
-      background-color: #f2f2f2; /* Light gray for odd rows */
-    }
+  tr:nth-child(odd) {
+    background-color: #f2f2f2; /* Light gray for odd rows */
+  }
 
-    tr:nth-child(even) {
-      background-color: #ffffff; /* White for even rows */
-    }
+  tr:nth-child(even) {
+    background-color: #ffffff; /* White for even rows */
+  }
 
-    tr:hover {
-      background-color: #ddd; /* Highlight row on hover */
-    }
+  tr:hover {
+    background-color: #ddd; /* Highlight row on hover */
+  }
 `})
 export class PlayersComponent {
   characters: Character[];
   constructor() {
     this.characters = [
       {
+        id: 1000,
         name: 'Thorn',
         gender: 'Male',
         class: 'Warrior',
-        faction: 'The Iron Brotherhood',
-        startingLocation: 'Ironhold',
+        faction: 'The Arcane Circle',
+        startingLocation: 'Wet Lands',
         funFact: 'Thorn once single-handedly defeated a dragon.'
       },
       {
+        id: 1001,
         name: 'Elara',
         gender: 'Female',
         class: 'Mage',
@@ -136,68 +138,76 @@ export class PlayersComponent {
         funFact: 'Elara can summon lightning with her fingertips.'
       },
       {
+        id: 1002,
         name: 'Shade',
         gender: 'Other',
         class: 'Rogue',
         faction: 'The Silent Blades',
-        startingLocation: 'Shadowport',
+        startingLocation: 'Eldoria Spire',
         funFact: 'Shade is known for disappearing in the blink of an eye.'
       },
       // ... add 7 more characters
       {
+        id: 1003,
         name: 'Broom',
         gender: 'Female',
         class: 'Rogue',
         faction: 'The Bloomfield',
-        startingLocation: 'Ironhold',
+        startingLocation: 'Pyrestone Keep',
         funFact: 'Broom is known for portal to different locations in the split of a second.'
       },
       {
+        id: 1004,
         name: 'King',
         gender: 'Male',
         class: 'Mage',
         faction: 'The Silent Blades',
-        startingLocation: 'Shadowport',
+        startingLocation: 'Mystic Falls',
         funFact: 'King is known for the many tricks up is crown.'
       },
       {
+        id: 1005,
         name: 'Jin',
         gender: 'Other',
         class: 'Warrior',
         faction: 'Draw Swords',
-        startingLocation: 'wetlands',
+        startingLocation: 'Wet Lands',
         funFact: 'Jin is known for his mage and combat abilities.'
       },
       {
+        id: 1006,
         name: "Seraphina Nightshade",
         gender: "Female",
         class: "Rogue",
-        faction: "Shadow Syndicate",
-        startingLocation: "Raven's Hollow",
+        faction: "The Silent Blades",
+        startingLocation: "Eldoria Spire",
         funFact: "Seraphina once stole the crown jewels of a fallen kingdom and returned them just for the thrill."
       },
       {
+        id: 1007,
         name: "Magnus Stormcaller",
         gender: "Male",
         class: "Mage",
-        faction: "Arcane Council",
+        faction: "The Bloomfield",
         startingLocation: "Eldoria Spire",
         funFact: "Magnus accidentally turned an entire village invisible for a week during a magical experiment gone wrong."
       },
       {
+        id: 1008,
         name: "Kaelin Emberheart",
         gender: "Other",
         class: "Warrior",
-        faction: "The Ember Vanguard",
+        faction: "The Silent Blades",
         startingLocation: "Pyrestone Keep",
         funFact: "Kaelin wields a sword that burns with an eternal flame, said to have been forged in the heart of a dying star."
       },
       {
+        id: 1009,
         name: "Sylvara Moondancer",
         gender: "Female",
         class: "Mage",
-        faction: "Verdant Circle",
-        startingLocation: "Sylvan Glade",
+        faction: "The Arcane Circle",
+        startingLocation: "Pyrestone Keep",
         funFact: "Sylvara can communicate with plants and once convinced an ancient oak to move its roots and save a trapped village."
       }
     ];
