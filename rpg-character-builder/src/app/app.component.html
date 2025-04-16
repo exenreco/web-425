@@ -74,21 +74,45 @@
     position: relative;
   }
   .site-header .navigation {
-    flex: auto;
+    color: #fff;
+    flex: 0 0 auto;
     align-items: center;
     justify-items: right;
     justify-content: right;
+    flex-direction: column;
     width: calc(100% - 20em);
     max-width: calc(100% - 20em);
     min-width: calc(100% - 20em);
+  }
+  .site-header .navigation .signin-user {
+    padding: .2em;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: left;
+    justify-items: right;
+    justify-content: right;
+    width: calc(100% - .4em);
+  }
+  .site-header .navigation .signin-user .text {
+    border-bottom: .2em solid #fff;
+  }
+  .site-header .navigation .list {
+    align-items: center;
+    justify-items: right;
+    justify-content: right;
+    color: #fff;
+    display: flex;
+    flex: 0 0 auto;
+    padding: .2em;
+    list-style-type: none;
+    width: calc( 100% - .4em);
   }
   .site-footer .navigation {
     width: 25%;
     max-width: 25%;
     min-width: 25%;
   }
-  .site-footer .navigation .list,
-  .site-header .navigation .list {
+  .site-footer .navigation .list {
     color: #fff;
     display: flex;
     flex: 0 0 auto;
@@ -97,6 +121,7 @@
     justify-items: left;
     justify-content: left;
     list-style-type: none;
+    width: calc( 100% - .4em);
   }
   .site-header .navigation .list .item,
   .site-footer .navigation .list .item {
@@ -298,13 +323,31 @@
     <span class="tagline">Home to over 3.5M characters!</span>
   </section>
   <nav class="navigation">
+    <div class="signin-user">
+       <!-- when authenticated -->
+       <ng-container *ngIf="isAuth;">
+        <span class="text">Welcome {{ email }}!</span>
+      </ng-container>
+    </div>
     <ul class="list">
       <li class="item"><a class="link" routerLink="/home">Home</a></li>
       <li class="item"><a class="link" routerLink="/players">Players</a></li>
       <li class="item"><a class="link" routerLink="/create-guild">Create Guild</a></li>
-      <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      <!-- when authenticated -->
+      <ng-container *ngIf="isAuth;">
+        <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      </ng-container>
       <li class="item"><a class="link" routerLink="/character-faction">Character Faction</a></li>
-      <li class="item"><a class="link" routerLink="/signin">Sign In</a></li>
+      <li class="item">
+        <!-- when authenticated -->
+        <ng-container *ngIf="isAuth; else signedOut">
+          <a class="link" style="cursor:pointer;" (click)="signOut()">Sign Out</a>
+        </ng-container>
+        <!-- when not authenticated -->
+        <ng-template #signedOut>
+          <a class="link" routerLink="/signin">Sign In</a>
+        </ng-template>
+      </li>
     </ul>
   </nav>
 </header>
@@ -335,9 +378,20 @@
       <li class="item"><a class="link" routerLink="/home">Home</a></li>
       <li class="item"><a class="link" routerLink="/players">Players</a></li>
       <li class="item"><a class="link" routerLink="/create-guild">Create Guild</a></li>
-      <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      <ng-container *ngIf="isAuth;">
+        <li class="item"><a class="link" routerLink="/create-character">Create Character</a></li>
+      </ng-container>
       <li class="item"><a class="link" routerLink="/character-faction">Character Faction</a></li>
-      <li class="item"><a class="link" routerLink="/signin">Sign In</a></li>
+      <li class="item">
+        <!-- when authenticated -->
+        <ng-container *ngIf="isAuth; else signedOut">
+          <a class="link" style="cursor:pointer;" (click)="signOut()">Sign Out</a>
+        </ng-container>
+        <!-- when not authenticated -->
+        <ng-template #signedOut>
+          <a class="link" routerLink="/signin">Sign In</a>
+        </ng-template>
+      </li>
     </ul>
   </nav>
 </footer>
