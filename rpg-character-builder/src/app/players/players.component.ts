@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Character } from './players.interface';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   template: `
   <section class="page">
     <h2 class="title">Players</h2>

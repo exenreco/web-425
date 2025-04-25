@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-character-faction',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, RouterLink ],
   template: `
     <section class="page">
       <h1>Character Faction</h1><br>
