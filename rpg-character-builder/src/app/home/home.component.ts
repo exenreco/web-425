@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 // Import Three.js (all of it)
 import * as THREE from 'three';
@@ -14,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, RouterLink],
   styles: [`
     /** {
       outline: 1px solid red;
