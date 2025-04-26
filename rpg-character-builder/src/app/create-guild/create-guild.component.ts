@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { GuildListComponent } from '../guild-list/guild-list.component';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
+
 import { Guild } from './create.guild.interface';
 
 @Component({
   selector: 'app-create-guild',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterOutlet, RouterLink],
+  imports: [GuildListComponent, CommonModule, ReactiveFormsModule, RouterOutlet, RouterLink],
   template: `
     <section class="page create-guild">
       <div class="container">
         <form [formGroup]="guildForm" (ngSubmit)="onSubmit()" class="form">
-          <h2 class="title">New Guild Info:</h2>
+          <h2 class="page-title">Create a new guild:</h2>
           <div>
             <label for="name">Guild Name</label>
             <input id="name" formControlName="name" />
@@ -60,47 +62,16 @@ import { Guild } from './create.guild.interface';
               You must accept terms.
             </div>
           </div>
-
           <button type="submit" [disabled]="guildForm.invalid">Create Guild</button>
         </form>
         <section class="results">
-          <h3 class="title">Newly Created Guilds</h3>
-          <div *ngIf="guilds.length > 0" class="guild-list">
-            <ul>
-              <li *ngFor="let g of guilds">
-                <table>
-                  <tr><th>Systems</th><th>Info</th><tr>
-                  <tr><td>ID</td><td>{{g.id}}</td></tr>
-                  <tr><td>Guild</td><td>{{g.name}}</td></tr>
-                  <tr><td>Type</td><td>{{g.type}}</td></tr>
-                  <tr><td>Description</td><td>{{g.description}}</td></tr>
-                  <tr><td>Accepted Terms</td><td>{{g.terms}}</td></tr>
-                  <tr><td>Notification Preference</td><td>{{g.notificationPreference}}</td></tr>
-                </table>
-              </li>
-            </ul>
-          </div>
+          <h3 class="page-title">Newly Created Guilds</h3>
+          <app-guild-list [guilds]="guilds"></app-guild-list>
         </section>
       </div>
     </section>
   `,
   styles: `
-    .page {
-      padding-top: 2em;
-      margin-top: 7em;
-      display: block;
-      flex: 1 1 auto;
-      height: 100vh;
-    }
-    .title {
-      width: 98%;
-      margin: auto;
-      color: #fff;
-      font-weight: bold;
-      font-size: 2rem;
-      text-align: left;
-      border-bottom: .15em solid #fff;
-    }
     .page .container {
       margin: auto;
       padding: .8em;
@@ -176,43 +147,7 @@ import { Guild } from './create.guild.interface';
       color: red;
       font-size: 0.9em;
     }
-    table {
-    margin: auto;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    width: calc(100% - 2em);
-    border-collapse: collapse;
-  }
-  table th {
-    font-size: 2rem;
-    text-align: left;
-    border-bottom: .15em solid #fff;
-  }
-  table tr:nth-child(2) {
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 4px;
-    text-align: left;
-  }
-  th {
-    background-color: #333;
-    color: white;
-  }
 
-  tr:nth-child(odd) {
-    background-color: #f2f2f2; /* Light gray for odd rows */
-  }
-
-  tr:nth-child(even) {
-    background-color: #ffffff; /* White for even rows */
-  }
-
-  tr:hover {
-    background-color: #ddd; /* Highlight row on hover */
-  }
   @media only screen and (max-width: 1024px) {
     .page .container {
       margin: auto;
@@ -250,41 +185,48 @@ import { Guild } from './create.guild.interface';
   `
 })
 export class CreateGuildComponent {
-
-  // Initialize characterModel
-  guildModel: Partial<Guild> = {
-    id:               this.generateRandomId(),
-    name:             '',
-    type:             'Casual',
-    terms:            false,
-    description:      '',
-    notificationPreference: 'Email'
-  };
-
-  guildForm!: FormGroup;
   guilds: Guild[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  // Emit new guilds
+  @Output() addGuild = new EventEmitter<Guild>();
 
-  generateRandomId(): number {
-    return Math.floor(Math.random() * 1000) + 1;
+  guildForm!: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.initializeForm();
   }
 
-  ngOnInit(): void {
+
+  // Initialize GuildModel
+  GuildModel: Partial<Guild> = {
+    name: '',
+    type: 'Casual',
+    terms: false,
+    description: '',
+    notificationPreference: 'Email',
+  };
+
+  initializeForm(): void {
     this.guildForm = this.fb.group({
       id: this.generateRandomId(),
-      name: [this.guildModel.name, Validators.required],
-      type: [this.guildModel.type, Validators.required],
-      terms: [this.guildModel.terms, Validators.requiredTrue],
-      description: [this.guildModel.description, Validators.required],
-      notificationPreference: [this.guildModel.notificationPreference, Validators.required]
+      name: [this.GuildModel.name, Validators.required],
+      type: [this.GuildModel.type, Validators.required],
+      terms: [this.GuildModel.terms, Validators.requiredTrue],
+      description: [this.GuildModel.description, Validators.required],
+      notificationPreference: [this.GuildModel.notificationPreference, Validators.required]
     });
   }
 
   onSubmit(): void {
     if (this.guildForm.valid) {
+      const newGuild: Guild = this.guildForm.value as Guild;
+      this.addGuild.emit(newGuild); // Emit the event
       this.guilds.push(this.guildForm.value as Guild);
-      this.guildForm.reset({...this.guildModel, id: this.generateRandomId()});
+      this.guildForm.reset({...this.GuildModel, id: this.generateRandomId()});
     } else this.guildForm.markAllAsTouched();
+  }
+
+  generateRandomId(): number {
+    return Math.floor(Math.random() * 1000) + 1;
   }
 }

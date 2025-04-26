@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
+import { CharacterListComponent } from '../character-list/character-list.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
@@ -7,25 +8,8 @@ import { Character } from '../players/players.interface';
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterOutlet, RouterLink],
-  styles: `.page {
-    padding-top: 2em;
-    margin-top: 7em;
-    display: block;
-    flex: 0 0 auto;
-    height: 100vh;
-    max-width: calc(1080px- 1.6em);
-    min-width: calc(800px- 1.6em);
-  }
-  .title {
-    width: 98%;
-    margin: auto;
-    color: #fff;
-    font-weight: bold;
-    font-size: 2rem;
-    text-align: left;
-    border-bottom: .15em solid #fff;
-  }
+  imports: [CharacterListComponent, FormsModule, CommonModule, RouterOutlet, RouterLink],
+  styles: `
   .page.create-character .container {
     margin: auto;
     padding: .8em;
@@ -197,7 +181,7 @@ import { Character } from '../players/players.interface';
     <section class="page create-character">
       <div class="container">
         <form #characterForm="ngForm" class="character-form" (ngSubmit)="onSubmit()" >
-          <div class="section row"><h2 class="title">Create a new player</h2></div>
+          <div class="section row"><h2 class="page-title">Create a new player</h2></div>
           <div class="section row">
             <label>
               <span class="field-title">Name:</span>
@@ -268,27 +252,18 @@ import { Character } from '../players/players.interface';
           </div>
         </form>
         <section class="results">
-          <h3 class="title">Newly Created Players</h3>
-          <ul *ngIf="characters.length > 0">
-            <li *ngFor="let c of characters">
-              <table>
-                <tr><th>Systems</th><th>Info</th><tr>
-                <tr><td>ID</td><td>{{c.id}}</td></tr>
-                <tr><td>Player</td><td>{{c.name}}</td></tr>
-                <tr><td>Gender</td><td>{{c.gender}}</td></tr>
-                <tr><td>Class</td><td>{{c.class}}</td></tr>
-                <tr><td>Faction</td><td>{{c.faction}}</td></tr>
-                <tr><td>Location</td><td>{{c.startingLocation}}</td></tr>
-                <tr><td>About</td><td>{{c.funFact}}</td></tr>
-              </table>
-            </li>
-          </ul>
+          <h3 class="page-title">Newly Created Players</h3>
+          <app-character-list [characters]="characters"></app-character-list>
         </section>
       </div>
     </section>
   `
 })
 export class CreateCharacterComponent {
+  characters: Character[] = [];
+
+  // Emit new guilds
+  @Output() addCharacter = new EventEmitter<Character>();
 
   // Initialize characterModel
   characterModel: Partial<Character> = {
@@ -300,12 +275,6 @@ export class CreateCharacterComponent {
     startingLocation: 'Wet Lands'
   };
 
-  characters: Character[] = [];
-
-  generateRandomId(): number {
-    return Math.floor(Math.random() * 1000) + 1;
-  }
-
   onSubmit() {
     const newCharacter: Character = {
       id: this.generateRandomId(),
@@ -316,7 +285,7 @@ export class CreateCharacterComponent {
       funFact: this.characterModel.funFact!,
       startingLocation: this.characterModel.startingLocation as Character['startingLocation'],
     };
-    console.log("New character created:", newCharacter); // Debug log
+    this.addCharacter.emit(newCharacter); // Emit the event
     this.characters.push(newCharacter);
     this.resetForm();
   }
@@ -332,4 +301,7 @@ export class CreateCharacterComponent {
     };
   }
 
+  generateRandomId(): number {
+    return Math.floor(Math.random() * 1000) + 1;
+  }
 }
