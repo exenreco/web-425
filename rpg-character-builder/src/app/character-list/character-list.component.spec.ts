@@ -3,7 +3,7 @@ import { CharacterListComponent } from './character-list.component';
 import { Character } from '../players/players.interface';
 import { By } from '@angular/platform-browser';
 
-describe('CharacterListComponent', () => {
+describe('CharacterListComponent (TDD)', () => {
   let
     component: CharacterListComponent,
     fixture: ComponentFixture<CharacterListComponent>;
